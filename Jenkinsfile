@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage ('Build') {
             steps {
-                Retry(4) {
+                Retry(1) {
                     echo "Welcome to jenkins Pipelines"
                     error "This is like a Failure"
                 }
