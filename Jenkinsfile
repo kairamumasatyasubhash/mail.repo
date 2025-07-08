@@ -1,8 +1,6 @@
 
 pipeline {
-    agent slave {
-        label 'java-slave'
-    }
+    agent any
     stages {
         stage ('Build') {
             steps {
@@ -10,7 +8,7 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-        satge ('test') {
+        stage ('test') {
             steps {
                 script {
                 echo 'Testing...'
