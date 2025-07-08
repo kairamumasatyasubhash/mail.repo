@@ -1,26 +1,33 @@
+
 pipeline {
-    agent any
+    agent slave {
+        label 'java-slave'
+    }
     stages {
-        stage('sucess the code') {
+        stage ('Build') {
             steps {
-                echo "This is a successful pipeline execution"
+                echo 'Building...'
+                sh 'mvn clean package'
             }
         }
-        stage ('bulding the applicsatiom') {
+        satge ('test') {
             steps {
-                echo "Building the application"
+                script {
+                echo 'Testing...'
+                  }
             }
         }
-        post {
-            sucess {
-                mail bcc: '',body: 'The build was successful!', 
-                     cc: '', from: '', replyTo: '', subject: 'Build Success Notification', 
-                     to: 'classdevops378@gmail.com'
+        stage ('Deploy') {
+            steps {
+                echo 'Deploying...'
+                sh 'mvn deploy'
             }
-            failure {
-                mail bcc: '', body: 'The build failed. Please check the logs.', 
-                     cc: '', from: '', replyTo: '', subject: 'Build Failure Notification', 
-                     to: 'classdevops378@gmail.com'
+        }
+        stage ('Cleanup') {
+            steps {
+                echo 'Cleaning up...'
+                sh 'mvn clean'
+            }
         }
     }
 }
